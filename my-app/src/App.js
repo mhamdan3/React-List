@@ -3,6 +3,26 @@ import './App.css';
 import Header from './components/header';
 import ListInput from './components/listInput';
 import ListItem from './components/listItem';
+import dragula from 'react-dragula';
+
+// var App = React.createClass({
+//   render: function () {
+//     return <div className='container'>
+//       <div>Swap me around</div>
+//       <div>Swap her around</div>
+//       <div>Swap him around</div>
+//       <div>Swap them around</div>
+//       <div>Swap us around</div>
+//       <div>Swap things around</div>
+//       <div>Swap everything around</div>
+//     </div>;
+//   },
+//   componentDidMount: function () {
+//     var container = React.findDOMNode(this);
+//     dragula([container]);
+//   }
+// });
+// React.render(<App />, document.getElementById('examples'));
 
 class App extends Component {
   constructor(props) {
@@ -35,13 +55,17 @@ class App extends Component {
       });
   }
 
+  componentDidMount() {
+    dragula([document.getElementById('drag-list')]).on('drop', (a, b) => console.log(a));
+  }
+
   render() {
     return (
       <div className="App">
         <div className="list-wrapper">
           <Header />
           <ListInput listText="" addList={this.addList} />
-          <ul>
+          <ul id="drag-list">
             {
               this.state.lists.map((list) => {
                 return <ListItem list={list} key={list.id} id={list.id} removeList={this.removeList}/>
